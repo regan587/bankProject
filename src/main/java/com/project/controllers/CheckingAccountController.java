@@ -143,7 +143,7 @@ public class CheckingAccountController {
             }
         
             if (checkingAccounts == null || checkingAccounts.isEmpty()) {
-                System.out.println("No checking accounts found for the user.");
+                System.out.println("No checking accounts found for the user!");
                 return new int[] {-1}; // Return a special value to indicate no accounts
             }
         
