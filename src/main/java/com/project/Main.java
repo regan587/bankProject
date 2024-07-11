@@ -5,7 +5,7 @@ import com.project.controllers.TransactionController;
 import com.project.controllers.UserController;
 import com.project.exceptions.InvalidInputException;
 
-public class Main {
+public class Main { 
     public static void main(String[] args) {
         UserController userController = new UserController();
         CheckingAccountController checkingAccountController = new CheckingAccountController();
