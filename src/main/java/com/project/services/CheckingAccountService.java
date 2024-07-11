@@ -21,11 +21,11 @@ public class CheckingAccountService {
     }
 
     public CheckingAccount createNewCheckingAccount(CheckingAccount newCheckingAccount){
-        if (newCheckingAccount.getTotalAmount() < 0){
+        if (newCheckingAccount.getbalance() < 0){
             throw new CheckingAccountBelowZeroException("Cannot have less than 0 dollars in your account!");
         } else {
             System.out.println("");
-            System.out.println(newCheckingAccount.getAccountName() + " Created with an initial deposit of: $" + newCheckingAccount.getTotalAmount() + "!");
+            System.out.println(newCheckingAccount.getAccountName() + " Created with an initial deposit of: $" + newCheckingAccount.getbalance() + "!");
             System.out.println("");
             return checkingAccountDAO.insertNewCheckingAccount(newCheckingAccount);
         }

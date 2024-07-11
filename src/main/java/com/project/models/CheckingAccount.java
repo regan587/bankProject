@@ -4,20 +4,20 @@ public class CheckingAccount {
 
     private int id;
     private String accountName;
-    private double totalAmount;
+    private double balance;
     private int userId;
 
     // Constructor, getters, and setters
-    public CheckingAccount(int id, String accountName, double totalAmount, int userId) {
+    public CheckingAccount(int id, String accountName, double balance, int userId) {
         this.id = id;
         this.accountName = accountName;
-        this.totalAmount = totalAmount;
+        this.balance = balance;
         this.userId = userId;
     }
 
-    public CheckingAccount(String accountName, double totalAmount, int userId) {
+    public CheckingAccount(String accountName, double balance, int userId) {
         this.accountName = accountName;
-        this.totalAmount = totalAmount;
+        this.balance = balance;
         this.userId = userId;
     }
 
@@ -38,12 +38,12 @@ public class CheckingAccount {
         this.accountName = accountName;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public double getbalance() {
+        return balance;
     }
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setbalance(double balance) {
+        this.balance = balance;
     }
 
     public int getUserId() {
@@ -59,7 +59,7 @@ public class CheckingAccount {
         return "CheckingAccount{" +
                 "id=" + id +
                 ", accountName='" + accountName + '\'' +
-                ", totalAmount=" + totalAmount +
+                ", balance=" + balance +
                 ", userId=" + userId +
                 '}';
     }
@@ -70,7 +70,7 @@ public class CheckingAccount {
         if (o == null || getClass() != o.getClass()) return false;
         CheckingAccount that = (CheckingAccount) o;
         return id == that.id &&
-                Double.compare(that.totalAmount, totalAmount) == 0 &&
+                Double.compare(that.balance, balance) == 0 &&
                 userId == that.userId &&
                 accountName.equals(that.accountName);
     }

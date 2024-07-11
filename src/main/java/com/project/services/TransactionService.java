@@ -33,18 +33,18 @@ public class TransactionService {
         double chargeAmount = transaction.getChargeAmount();
         int accountId = transaction.getAccountId();
         List<Transaction> transactions = transactionDAO.selectTransactionsByAccountId(accountId);
-        double currentTotalAmount = transactions.get(transactions.size()-1).getTotalAmountRemaining();
+        double currentbalance = transactions.get(transactions.size()-1).getremainingBalance();
         if (chargeAmount < 1) {
             throw new TransactionAmountBelowOneException("Withdrawal amount must be greater than 1 dollar!");
         }
     
-        double newTotalAmountRemaining = currentTotalAmount - chargeAmount;
+        double newremainingBalance = currentbalance - chargeAmount;
     
-        if (newTotalAmountRemaining < 0) {
+        if (newremainingBalance < 0) {
             throw new CheckingAccountBelowZeroException("Checking account balances cannot go below 0!");
         }
     
-        transaction.setTotalAmountRemaining(newTotalAmountRemaining); // Update the transaction object with new total amount remaining
+        transaction.setremainingBalance(newremainingBalance); // Update the transaction object with new total amount remaining
     
         // Proceed with inserting the withdrawal transaction into the database
         return transactionDAO.insertNewWithdrawalTransaction(transaction);
@@ -75,7 +75,7 @@ public class TransactionService {
             
             System.out.printf("%-15.2f | %-22.2f | %s%n", 
                             transaction.getChargeAmount(), 
-                            transaction.getTotalAmountRemaining(), 
+                            transaction.getremainingBalance(), 
                             formattedDate);
         }
     }

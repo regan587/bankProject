@@ -51,7 +51,9 @@ public class TransactionController {
             double depositAmount = scanner.nextDouble();
             int depositUserId = transactionService.selectTransactionsByAccountId(accountId).get(0).getUserId();
             Transaction depositTransaction = new Transaction(depositAmount, accountId, depositUserId, new Timestamp(System.currentTimeMillis()));
-            transactionService.createNewDeposit(depositTransaction); 
+            Transaction persistedTransaction = transactionService.createNewDeposit(depositTransaction); 
+            System.out.println("");
+            System.out.println(depositAmount + " Has been deposited into your account! Your new balance is: " + persistedTransaction.getremainingBalance());
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number.");
             scanner.next(); // Clear the invalid input
@@ -67,7 +69,9 @@ public class TransactionController {
             double withdrawAmount = scanner.nextDouble();
             int withdrawUserId = transactionService.selectTransactionsByAccountId(accountId).get(0).getUserId();
             Transaction withdrawTransaction = new Transaction(withdrawAmount, accountId, withdrawUserId, new Timestamp(System.currentTimeMillis()));
-            transactionService.createNewWithdrawal(withdrawTransaction);
+            Transaction persistedTransaction = transactionService.createNewWithdrawal(withdrawTransaction);
+            System.out.println("");
+            System.out.println(withdrawAmount + " Has been withdrawn from your account! Your new balance is: " + persistedTransaction.getremainingBalance());
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number.");
             scanner.next(); // Clear the invalid input

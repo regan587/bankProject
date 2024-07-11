@@ -5,51 +5,41 @@ import java.sql.Timestamp;
 public class Transaction {
     private int id;
     private Timestamp date;
-    private String description;
     private double chargeAmount;
-    private double totalAmountRemaining;
-    private double previousAmount;
+    private double remainingBalance;
+    private double previousBalance;
     private int accountId;
     private int userId;
 
     // Constructor, getters, and setters
-    public Transaction(int id, Timestamp date, String description, double chargeAmount, double totalAmountRemaining, double previousAmount, int accountId, int userId) {
+    public Transaction(int id, Timestamp date, double chargeAmount, double remainingBalance, double previousBalance, int accountId, int userId) {
         this.id = id;
         this.date = date;
-        this.description = description;
         this.chargeAmount = chargeAmount;
-        this.totalAmountRemaining = totalAmountRemaining;
-        this.previousAmount = previousAmount;
+        this.remainingBalance = remainingBalance;
+        this.previousBalance = previousBalance;
         this.accountId = accountId;
         this.userId = userId;
     }
 
-    // public Transaction(String description, double chargeAmount, double totalAmountRemaining, double previousAmount, int accountId, int userId, Timestamp date) {
-    //     this.description = description;
+    // public Transaction(String , double chargeAmount, double remainingBalance, double previousBalance, int accountId, int userId, Timestamp date) {
+    //     this. = ;
     //     this.chargeAmount = chargeAmount;
-    //     this.totalAmountRemaining = totalAmountRemaining;
-    //     this.previousAmount = previousAmount;
+    //     this.remainingBalance = remainingBalance;
+    //     this.previousBalance = previousBalance;
     //     this.accountId = accountId;
     //     this.userId = userId;
     //     this.date = date; // Assigning timestamp parameter
     // }
 
-    // public Transaction(String description, double chargeAmount, double totalAmountRemaining, double previousAmount, int accountId, int userId) {
-    //     this.description = description;
+    // public Transaction(String , double chargeAmount, double remainingBalance, double previousBalance, int accountId, int userId) {
+    //     this. = ;
     //     this.chargeAmount = chargeAmount;
-    //     this.totalAmountRemaining = totalAmountRemaining;
-    //     this.previousAmount = previousAmount;
+    //     this.remainingBalance = remainingBalance;
+    //     this.previousBalance = previousBalance;
     //     this.accountId = accountId;
     //     this.userId = userId;
     // }
-
-    public Transaction(String description, double chargeAmount, int accountId, int userId, Timestamp date) {
-        this.description = description;
-        this.chargeAmount = chargeAmount;
-        this.accountId = accountId;
-        this.userId = userId;
-        this.date = date;
-    }
 
     public Transaction(double chargeAmount, int accountId, int userId, Timestamp date) {
         this.chargeAmount = chargeAmount;
@@ -75,14 +65,6 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public double getChargeAmount() {
         return chargeAmount;
     }
@@ -91,20 +73,20 @@ public class Transaction {
         this.chargeAmount = chargeAmount;
     }
 
-    public double getTotalAmountRemaining() {
-        return totalAmountRemaining;
+    public double getremainingBalance() {
+        return remainingBalance;
     }
 
-    public void setTotalAmountRemaining(double totalAmountRemaining) {
-        this.totalAmountRemaining = totalAmountRemaining;
+    public void setremainingBalance(double remainingBalance) {
+        this.remainingBalance = remainingBalance;
     }
 
-    public double getPreviousAmount() {
-        return previousAmount;
+    public double getpreviousBalance() {
+        return previousBalance;
     }
 
-    public void setPreviousAmount(double previousAmount) {
-        this.previousAmount = previousAmount;
+    public void setpreviousBalance(double previousBalance) {
+        this.previousBalance = previousBalance;
     }
 
     public int getAccountId() {
@@ -128,9 +110,8 @@ public class Transaction {
         return "Transaction{" +
                 "id=" + id +
                 ", date=" + date +
-                ", description='" + description + '\'' +
                 ", chargeAmount=" + chargeAmount +
-                ", totalAmountRemaining=" + totalAmountRemaining +
+                ", remainingBalance=" + remainingBalance +
                 ", accountId=" + accountId +
                 '}';
     }
@@ -142,9 +123,8 @@ public class Transaction {
         Transaction that = (Transaction) o;
         return id == that.id &&
                 Double.compare(that.chargeAmount, chargeAmount) == 0 &&
-                Double.compare(that.totalAmountRemaining, totalAmountRemaining) == 0 &&
+                Double.compare(that.remainingBalance, remainingBalance) == 0 &&
                 accountId == that.accountId &&
-                date.equals(that.date) &&
-                description.equals(that.description);
+                date.equals(that.date);
     }
 }
