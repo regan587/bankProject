@@ -15,6 +15,7 @@ com\project\exceptions\CheckingAccountBelowZeroException.class
 com\project\util\DatabaseConnector.class
 com\project\daos\CheckingAccountDAO.class
 com\project\controllers\UserController.class
+com\project\util\DatabaseScriptRunner.class
 com\project\models\CheckingAccount.class
 com\project\exceptions\InvalidInputException.class
 com\project\services\UserService.class

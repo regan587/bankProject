@@ -12,6 +12,7 @@ C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\exceptions\Nul
 C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\controllers\UserController.java
 C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\exceptions\NullCheckingAccountException.java
 C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\exceptions\NullUserIdException.java
+C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\util\DatabaseScriptRunner.java
 C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\exceptions\LoginException.java
 C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\exceptions\TransactionAmountBelowOneException.java
 C:\Users\riley\OneDrive\Desktop\p0\bank\src\main\java\com\project\Main.java

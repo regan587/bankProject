@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.project.AppTest" time="0.114" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.project.AppTest" time="0.026" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
-    <property name="sun.java.command" value="C:\Users\riley\AppData\Local\Temp\surefire14352288994964384613\surefirebooter6129144641905254253.jar C:\Users\riley\AppData\Local\Temp\surefire14352288994964384613 2024-07-10T09-40-32_227-jvmRun1 surefire5097053164042859912tmp surefire_015029761835099983296tmp"/>
+    <property name="sun.java.command" value="C:\Users\riley\AppData\Local\Temp\surefire4636865358146779449\surefirebooter2782799516780948483.jar C:\Users\riley\AppData\Local\Temp\surefire4636865358146779449 2024-07-10T23-00-24_951-jvmRun1 surefire7154681882045690333tmp surefire_016992563172589549777tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\riley\OneDrive\Desktop\p0\bank\target\test-classes;C:\Users\riley\OneDrive\Desktop\p0\bank\target\classes;C:\Users\riley\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\riley\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;C:\Users\riley\.m2\repository\org\xerial\sqlite-jdbc\3.46.0.0\sqlite-jdbc-3.46.0.0.jar;C:\Users\riley\.m2\repository\org\slf4j\slf4j-api\1.7.36\slf4j-api-1.7.36.jar;C:\Users\riley\.m2\repository\org\slf4j\slf4j-reload4j\1.7.36\slf4j-reload4j-1.7.36.jar;C:\Users\riley\.m2\repository\ch\qos\reload4j\reload4j\1.2.19\reload4j-1.2.19.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\riley\AppData\Local\Temp\surefire14352288994964384613\surefirebooter6129144641905254253.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\riley\AppData\Local\Temp\surefire4636865358146779449\surefirebooter2782799516780948483.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.10+11-LTS-240"/>
@@ -56,5 +56,5 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="shouldAnswerWithTrue" classname="com.project.AppTest" time="0.01"/>
+  <testcase name="shouldAnswerWithTrue" classname="com.project.AppTest" time="0.001"/>
 </testsuite>
