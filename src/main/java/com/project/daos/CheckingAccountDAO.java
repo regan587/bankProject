@@ -15,8 +15,8 @@ public class CheckingAccountDAO {
     private TransactionDAO transactionDAO = new TransactionDAO();
 
     public CheckingAccount insertNewCheckingAccount(CheckingAccount checkingAccount) {
-        String insertAccountSql = "INSERT INTO checking_accounts (account_name, total_amount, user_id) VALUES (?,?,?)";
-        String insertTransactionSql = "INSERT INTO transactions (description, charge_amount, total_amount_remaining, previous_amount, account_id, user_id, date) VALUES (?,?,?,?,?,?,?)";
+        String insertAccountSql = "INSERT INTO checking_accounts (account_name, balance, user_id) VALUES (?,?,?)";
+        String insertTransactionSql = "INSERT INTO transactions (charge_amount, remaining_balance, previous_balance, account_id, user_id, date) VALUES (?,?,?,?,?,?)";
     
         Connection conn = null;
         PreparedStatement psAccount = null;
@@ -29,7 +29,7 @@ public class CheckingAccountDAO {
             // Inserting new checking account
             psAccount = conn.prepareStatement(insertAccountSql, PreparedStatement.RETURN_GENERATED_KEYS);
             psAccount.setString(1, checkingAccount.getAccountName());
-            psAccount.setDouble(2, checkingAccount.getTotalAmount());
+            psAccount.setDouble(2, checkingAccount.getbalance());
             psAccount.setInt(3, checkingAccount.getUserId());
             psAccount.executeUpdate();
     
@@ -43,20 +43,19 @@ public class CheckingAccountDAO {
             // Inserting new transaction
             if (generatedCheckingAccountId != -1) {
                 psTransaction = conn.prepareStatement(insertTransactionSql, PreparedStatement.RETURN_GENERATED_KEYS);
-                psTransaction.setString(1, "Initial deposit"); // Description of the transaction
-                psTransaction.setDouble(2, checkingAccount.getTotalAmount()); // Charge amount as initial deposit
-                psTransaction.setDouble(3, checkingAccount.getTotalAmount()); // Total amount remaining after deposit
-                psTransaction.setNull(4, java.sql.Types.DOUBLE); // Previous amount is null or 0 for initial deposit
-                psTransaction.setInt(5, generatedCheckingAccountId); // Account ID
-                psTransaction.setInt(6, checkingAccount.getUserId()); // User ID
-                psTransaction.setTimestamp(7, new java.sql.Timestamp(System.currentTimeMillis())); // Current timestamp
+                psTransaction.setDouble(1, checkingAccount.getbalance()); // Charge amount as initial deposit
+                psTransaction.setDouble(2, checkingAccount.getbalance()); // Total amount remaining after deposit
+                psTransaction.setNull(3, java.sql.Types.DOUBLE); // Previous amount is null or 0 for initial deposit
+                psTransaction.setInt(4, generatedCheckingAccountId); // Account ID
+                psTransaction.setInt(5, checkingAccount.getUserId()); // User ID
+                psTransaction.setTimestamp(6, new java.sql.Timestamp(System.currentTimeMillis())); // Current timestamp
                 psTransaction.executeUpdate();
     
                 // Commit the transaction
                 conn.commit();
     
                 return new CheckingAccount(generatedCheckingAccountId, checkingAccount.getAccountName(),
-                        checkingAccount.getTotalAmount(), checkingAccount.getUserId());
+                        checkingAccount.getbalance(), checkingAccount.getUserId());
             }
     
         } catch (SQLException e) {
@@ -102,10 +101,10 @@ public class CheckingAccountDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String account_name = rs.getString("account_name");
-                    Double total_amount = rs.getDouble("total_amount");
+                    Double balance = rs.getDouble("balance");
                     int user_id = rs.getInt("user_id");
                 
-                    checkingAccount = new CheckingAccount(id, account_name, total_amount, user_id);
+                    checkingAccount = new CheckingAccount(id, account_name, balance, user_id);
                 }
             }
         } catch (SQLException e) {
@@ -128,9 +127,9 @@ public class CheckingAccountDAO {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String accountName = rs.getString("account_name");
-                double totalAmount = rs.getDouble("total_amount");
+                double balance = rs.getDouble("balance");
 
-                CheckingAccount checkingAccount = new CheckingAccount(id, accountName, totalAmount, userId);
+                CheckingAccount checkingAccount = new CheckingAccount(id, accountName, balance, userId);
                 checkingAccounts.add(checkingAccount);
             }
         } catch (SQLException e) {
@@ -151,10 +150,10 @@ public class CheckingAccountDAO {
     
             if (rs.next()) {
                 int id = rs.getInt("id");
-                double totalAmount = rs.getDouble("total_amount");
+                double balance = rs.getDouble("balance");
                 int userId = rs.getInt("user_id");
     
-                checkingAccount = new CheckingAccount(id, accountName, totalAmount, userId);
+                checkingAccount = new CheckingAccount(id, accountName, balance, userId);
             }
         } catch (SQLException e) {
             System.err.println("Error retrieving checking account with account name " + accountName + ": " + e.getMessage());

@@ -106,7 +106,7 @@ public class CheckingAccountController {
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 CheckingAccount selectedAccount = checkingAccounts.get(accountIndex);
                 System.out.println("");
-                System.out.println("Selected Account: " + selectedAccount.getAccountName() + " | Total Balance: $" + selectedAccount.getTotalAmount());
+                System.out.println("Selected Account: " + selectedAccount.getAccountName() + " | Total Balance: $" + selectedAccount.getbalance());
                 // Confirm deletion
                 System.out.println("Are you sure you want to delete this account? (yes/no): ");
                 String confirmation = scanner.nextLine();
@@ -155,7 +155,7 @@ public class CheckingAccountController {
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 CheckingAccount selectedAccount = checkingAccounts.get(accountIndex);
                 System.out.println("Selected Account: " + selectedAccount.getAccountName() + 
-                "  |  Total Balance: " + selectedAccount.getTotalAmount());
+                "  |  Total Balance: " + selectedAccount.getbalance());
                 int[] accountIdAndChoiceInt = {selectedAccount.getId(), 3};
                 return accountIdAndChoiceInt;
             } 
@@ -188,7 +188,7 @@ public class CheckingAccountController {
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 CheckingAccount selectedAccount = checkingAccounts.get(accountIndex);
                 System.out.println("Selected Account: " + selectedAccount.getAccountName() + 
-                "  |  Total Balance: " + selectedAccount.getTotalAmount());
+                "  |  Total Balance: " + selectedAccount.getbalance());
                 int[] accountIdAndChoiceInt = new int[2];
                 if (direction.equals("Deposit")) {
                     accountIdAndChoiceInt[0] = selectedAccount.getId();

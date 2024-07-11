@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DatabaseConnector {
 
-    private static final String URL = "jdbc:sqlite:src/main/resources/bank.db";
+    private static final String URL = "jdbc:sqlite:src/main/resources/project.db";
 
     // Method to establish a database connection
     public static Connection connect() throws SQLException {
