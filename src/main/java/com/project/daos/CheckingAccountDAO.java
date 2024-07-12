@@ -6,30 +6,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import com.project.models.CheckingAccount;
 import com.project.util.DatabaseConnector;
 
 public class CheckingAccountDAO {
 
-    private TransactionDAO transactionDAO = new TransactionDAO();
+    private TransferDAO transferDAO = new TransferDAO();
 
     public CheckingAccount insertNewCheckingAccount(CheckingAccount checkingAccount) {
-        String insertAccountSql = "INSERT INTO checking_accounts (account_name, balance, user_id) VALUES (?,?,?)";
-        String insertTransactionSql = "INSERT INTO transactions (charge_amount, remaining_balance, previous_balance, account_id, user_id, date) VALUES (?,?,?,?,?,?)";
+        String insertAccountSql = "INSERT INTO checking_account (account_name, balance, user_id) VALUES (?,?,?)";
+        String insertTransferSql = "INSERT INTO transfer (charge_amount, remaining_balance, previous_balance, account_id, user_id, date) VALUES (?,?,?,?,?,?)";
     
         Connection conn = null;
         PreparedStatement psAccount = null;
-        PreparedStatement psTransaction = null;
+        PreparedStatement psTransfer = null;
     
         try {
             conn = DatabaseConnector.connect();
-            conn.setAutoCommit(false); // Set auto-commit to false
+            conn.setAutoCommit(false); 
     
-            // Inserting new checking account
             psAccount = conn.prepareStatement(insertAccountSql, PreparedStatement.RETURN_GENERATED_KEYS);
             psAccount.setString(1, checkingAccount.getAccountName());
-            psAccount.setDouble(2, checkingAccount.getbalance());
+            psAccount.setDouble(2, CheckingAccount.roundToTwoDecimalPlaces(checkingAccount.getBalance()));
             psAccount.setInt(3, checkingAccount.getUserId());
             psAccount.executeUpdate();
     
@@ -40,31 +38,31 @@ public class CheckingAccountDAO {
                 generatedCheckingAccountId = rsAccount.getInt(1);
             }
     
-            // Inserting new transaction
+            
             if (generatedCheckingAccountId != -1) {
-                psTransaction = conn.prepareStatement(insertTransactionSql, PreparedStatement.RETURN_GENERATED_KEYS);
-                psTransaction.setDouble(1, checkingAccount.getbalance()); // Charge amount as initial deposit
-                psTransaction.setDouble(2, checkingAccount.getbalance()); // Total amount remaining after deposit
-                psTransaction.setNull(3, java.sql.Types.DOUBLE); // Previous amount is null or 0 for initial deposit
-                psTransaction.setInt(4, generatedCheckingAccountId); // Account ID
-                psTransaction.setInt(5, checkingAccount.getUserId()); // User ID
-                psTransaction.setTimestamp(6, new java.sql.Timestamp(System.currentTimeMillis())); // Current timestamp
-                psTransaction.executeUpdate();
+                psTransfer = conn.prepareStatement(insertTransferSql, PreparedStatement.RETURN_GENERATED_KEYS);
+                psTransfer.setDouble(1, CheckingAccount.roundToTwoDecimalPlaces(checkingAccount.getBalance())); 
+                psTransfer.setDouble(2, CheckingAccount.roundToTwoDecimalPlaces(checkingAccount.getBalance())); 
+                psTransfer.setNull(3, java.sql.Types.DOUBLE); 
+                psTransfer.setInt(4, generatedCheckingAccountId); 
+                psTransfer.setInt(5, checkingAccount.getUserId()); 
+                psTransfer.setTimestamp(6, new java.sql.Timestamp(System.currentTimeMillis())); 
+                psTransfer.executeUpdate();
     
-                // Commit the transaction
+                
                 conn.commit();
     
                 return new CheckingAccount(generatedCheckingAccountId, checkingAccount.getAccountName(),
-                        checkingAccount.getbalance(), checkingAccount.getUserId());
+                        checkingAccount.getBalance(), checkingAccount.getUserId());
             }
     
         } catch (SQLException e) {
             try {
                 if (conn != null) {
-                    conn.rollback(); // Rollback in case of exception
+                    conn.rollback(); 
                 }
             } catch (SQLException rollbackEx) {
-                System.err.println("Error rolling back transaction: " + rollbackEx.getMessage());
+                System.err.println("Error rolling back transfer: " + rollbackEx.getMessage());
             }
             System.err.println("Error creating checking account: " + e.getMessage());
         } finally {
@@ -72,11 +70,11 @@ public class CheckingAccountDAO {
                 if (psAccount != null) {
                     psAccount.close();
                 }
-                if (psTransaction != null) {
-                    psTransaction.close();
+                if (psTransfer != null) {
+                    psTransfer.close();
                 }
                 if (conn != null) {
-                    conn.setAutoCommit(true); // Reset auto-commit to true after transaction
+                    conn.setAutoCommit(true); 
                     conn.close();
                 }
             } catch (SQLException closeEx) {
@@ -86,22 +84,22 @@ public class CheckingAccountDAO {
     
         return null;
     }
-    
+
 
     public CheckingAccount selectCheckingAccountById(int id){
 
         CheckingAccount checkingAccount = null;
-        String sql = "SELECT * FROM checking_accounts WHERE id = ?";
+        String sql = "SELECT * FROM checking_account WHERE id = ?";
         
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql)) {
             
-            ps.setInt(1, id); // Set the parameter for the placeholder
+            ps.setInt(1, id); 
             
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     String account_name = rs.getString("account_name");
-                    Double balance = rs.getDouble("balance");
+                    Double balance = CheckingAccount.roundToTwoDecimalPlaces(rs.getDouble("balance"));
                     int user_id = rs.getInt("user_id");
                 
                     checkingAccount = new CheckingAccount(id, account_name, balance, user_id);
@@ -117,7 +115,7 @@ public class CheckingAccountDAO {
 
     public List<CheckingAccount> selectCheckingAccountsByUserId(int userId) {
         List<CheckingAccount> checkingAccounts = new ArrayList<>();
-        String sql = "SELECT * FROM checking_accounts WHERE user_id = ?";
+        String sql = "SELECT * FROM checking_account WHERE user_id = ?";
 
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -127,7 +125,7 @@ public class CheckingAccountDAO {
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String accountName = rs.getString("account_name");
-                double balance = rs.getDouble("balance");
+                double balance = CheckingAccount.roundToTwoDecimalPlaces(rs.getDouble("balance"));
 
                 CheckingAccount checkingAccount = new CheckingAccount(id, accountName, balance, userId);
                 checkingAccounts.add(checkingAccount);
@@ -141,7 +139,7 @@ public class CheckingAccountDAO {
 
     public CheckingAccount selectCheckingAccountByAccountName(String accountName) {
         CheckingAccount checkingAccount = null;
-        String sql = "SELECT * FROM checking_accounts WHERE account_name = ?";
+        String sql = "SELECT * FROM checking_account WHERE account_name = ?";
     
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -150,7 +148,7 @@ public class CheckingAccountDAO {
     
             if (rs.next()) {
                 int id = rs.getInt("id");
-                double balance = rs.getDouble("balance");
+                double balance = CheckingAccount.roundToTwoDecimalPlaces(rs.getDouble("balance"));
                 int userId = rs.getInt("user_id");
     
                 checkingAccount = new CheckingAccount(id, accountName, balance, userId);
@@ -165,7 +163,7 @@ public class CheckingAccountDAO {
 
     public void deleteCheckingAccountByCheckingAccountId(int id){
         try (Connection connection = DatabaseConnector.connect()){
-            String sql = "DELETE FROM checking_accounts WHERE id = ?";
+            String sql = "DELETE FROM checking_account WHERE id = ?";
             
             PreparedStatement ps = connection.prepareStatement(sql);
             
@@ -175,12 +173,12 @@ public class CheckingAccountDAO {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        transactionDAO.deleteTransactionsByCheckingAccountId(id);
+        transferDAO.deleteTransfersByCheckingAccountId(id);
     }
 
     public void deleteCheckingAccountsByUserId(int userId){
         try (Connection connection = DatabaseConnector.connect()){
-            String sql = "DELETE FROM checking_accounts WHERE user_id = ?";
+            String sql = "DELETE FROM checking_account WHERE user_id = ?";
             
             PreparedStatement ps = connection.prepareStatement(sql);
             
@@ -190,7 +188,7 @@ public class CheckingAccountDAO {
         }catch(SQLException e){
             System.out.println(e.getMessage());
         }
-        transactionDAO.deleteTransactionsByUserId(userId);
+        transferDAO.deleteTransfersByUserId(userId);
     }
     
 }

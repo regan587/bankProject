@@ -25,43 +25,42 @@ public class CheckingAccountController {
     }
 
     public int[] takeUserInput(int userId) {
-    while (true) {
-        System.out.println("""
-                Welcome to your account!
-                Please enter the number associated with the action you want to perform:
-                1 Create New Checking Account
-                2 Delete Checking Account
-                3 View Checking Accounts
-                4 Make a Deposit
-                5 Make a Withdrawal
-                6 Logout
-                (Enter 'q' to exit at anytime);
-                """);
-        String userInput = scanner.nextLine();  
-        switch (userInput) {
-            case "1":
-                checkingAccountCreationHelper(userId);
-                break;
+        while (true) {
+            System.out.println("""
+                    Please enter the number associated with the action you want to perform:
+                    1 Create New Checking Account
+                    2 Delete Checking Account
+                    3 View Checking Accounts
+                    4 Make a Deposit
+                    5 Make a Withdrawal
+                    6 Logout
+                    (Enter 'q' to exit at anytime);
+                    """);
+            String userInput = scanner.nextLine();  
+            switch (userInput) {
+                case "1":
+                    checkingAccountCreationHelper(userId);
+                    break;
 
-            case "2":
-                checkingAccountDeletionHelper(userId);
-                break;
+                case "2":
+                    checkingAccountDeletionHelper(userId);
+                    break;
 
-            case "3":
-                return checkingAccountViewHelper(userId);
+                case "3":
+                    return checkingAccountViewHelper(userId);
 
-            case "4":
-                return checkingAccountTransactionHelper(userId, "Deposit");
-            case "5":
-                return checkingAccountTransactionHelper(userId, "Withdrawal");
-            case "6":
-                int[] logoutArray = {0,0};
-                return logoutArray;
-            case "q":
-                return null;
+                case "4":
+                    return checkingAccounttransferHelper(userId, "Deposit");
+                case "5":
+                    return checkingAccounttransferHelper(userId, "Withdrawal");
+                case "6":
+                    int[] logoutArray = {0,0};
+                    return logoutArray;
+                case "q":
+                    return null;
 
-            default:
-                throw new InvalidInputException("Invalid input: " + userInput);
+                default:
+                    throw new InvalidInputException("Invalid input: " + userInput);
             }
         }   
     }
@@ -91,7 +90,7 @@ public class CheckingAccountController {
                 checkingAccounts = checkingAccountService.viewCheckingAccounts(userId);
             } catch (NoCheckingAccountsException e) {
                 System.out.println(e.getMessage());
-                return; // Exit the method if there are no checking accounts
+                return;  
             }
         
             System.out.println("Which account do you want to delete?");
@@ -106,8 +105,7 @@ public class CheckingAccountController {
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 CheckingAccount selectedAccount = checkingAccounts.get(accountIndex);
                 System.out.println("");
-                System.out.println("Selected Account: " + selectedAccount.getAccountName() + " | Total Balance: $" + selectedAccount.getbalance());
-                // Confirm deletion
+                System.out.println("Selected Account: " + selectedAccount.getAccountName() + " | Total Balance: $" + selectedAccount.getBalance());
                 System.out.println("Are you sure you want to delete this account? (yes/no): ");
                 String confirmation = scanner.nextLine();
                 if (confirmation.equalsIgnoreCase("yes")) {
@@ -139,33 +137,34 @@ public class CheckingAccountController {
                 checkingAccounts = checkingAccountService.viewCheckingAccounts(userId);
             } catch (NoCheckingAccountsException e) {
                 System.out.println(e.getMessage());
-                return new int[] {-1}; // Return a special value to indicate no accounts
+                return new int[] {-1}; 
             }
         
             if (checkingAccounts == null || checkingAccounts.isEmpty()) {
                 System.out.println("No checking accounts found for the user!");
-                return new int[] {-1}; // Return a special value to indicate no accounts
+                return new int[] {-1}; 
             }
         
-            System.out.println("Choose an account to view transactions!");
+            System.out.println("Choose an account to view transfers!");
             String checkingAccountChoice = scanner.nextLine();
         
 
             int accountIndex = Integer.parseInt(checkingAccountChoice) - 1;
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 CheckingAccount selectedAccount = checkingAccounts.get(accountIndex);
-                System.out.println("Selected Account: " + selectedAccount.getAccountName() + 
-                "  |  Total Balance: " + selectedAccount.getbalance());
+                System.out.printf("Selected Account: " + selectedAccount.getAccountName() + 
+                "  |  Total Balance: $%.2f", selectedAccount.getBalance());
+                System.out.println("");
                 int[] accountIdAndChoiceInt = {selectedAccount.getId(), 3};
                 return accountIdAndChoiceInt;
             } 
         } catch (NumberFormatException e){
             System.out.println("Invalid input. Please enter a number.");
         }
-        return new int[] {-1}; // Return a special value to indicate an error
+        return new int[] {-1}; 
     }
 
-    private int[] checkingAccountTransactionHelper(int userId, String direction) {
+    private int[] checkingAccounttransferHelper(int userId, String direction) {
         
         List<CheckingAccount> checkingAccounts = null;
         try {
@@ -188,7 +187,7 @@ public class CheckingAccountController {
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 CheckingAccount selectedAccount = checkingAccounts.get(accountIndex);
                 System.out.println("Selected Account: " + selectedAccount.getAccountName() + 
-                "  |  Total Balance: " + selectedAccount.getbalance());
+                "  |  Total Balance: " + selectedAccount.getBalance());
                 int[] accountIdAndChoiceInt = new int[2];
                 if (direction.equals("Deposit")) {
                     accountIdAndChoiceInt[0] = selectedAccount.getId();

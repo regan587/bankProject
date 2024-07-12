@@ -1,5 +1,8 @@
 package com.project.models;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class CheckingAccount {
 
     private int id;
@@ -7,7 +10,6 @@ public class CheckingAccount {
     private double balance;
     private int userId;
 
-    // Constructor, getters, and setters
     public CheckingAccount(int id, String accountName, double balance, int userId) {
         this.id = id;
         this.accountName = accountName;
@@ -21,7 +23,6 @@ public class CheckingAccount {
         this.userId = userId;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }
@@ -38,12 +39,12 @@ public class CheckingAccount {
         this.accountName = accountName;
     }
 
-    public double getbalance() {
-        return balance;
+    public double getBalance() {
+        return roundToTwoDecimalPlaces(balance);
     }
 
-    public void setbalance(double balance) {
-        this.balance = balance;
+    public void setBalance(double balance) {
+        this.balance = roundToTwoDecimalPlaces(balance);
     }
 
     public int getUserId() {
@@ -59,7 +60,7 @@ public class CheckingAccount {
         return "CheckingAccount{" +
                 "id=" + id +
                 ", accountName='" + accountName + '\'' +
-                ", balance=" + balance +
+                ", balance=" + String.format("%.2f", balance) +
                 ", userId=" + userId +
                 '}';
     }
@@ -73,6 +74,15 @@ public class CheckingAccount {
                 Double.compare(that.balance, balance) == 0 &&
                 userId == that.userId &&
                 accountName.equals(that.accountName);
+    }
+
+    // public static double roundToTwoDecimalPlaces(double value) {
+    //     return Math.round(value * 100.0) / 100.0;
+    // }
+    public static double roundToTwoDecimalPlaces(double value) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }
 

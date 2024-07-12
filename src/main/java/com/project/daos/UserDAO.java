@@ -2,7 +2,6 @@ package com.project.daos;
 
 import com.project.models.User;
 import com.project.util.DatabaseConnector;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +13,7 @@ public class UserDAO {
 
     public List<User> selectAllUsers() {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM users";
+        String sql = "SELECT * FROM user";
 
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -36,12 +35,12 @@ public class UserDAO {
 
     public User selectUserById(int id) {
         User user = null;
-        String sql = "SELECT * FROM users WHERE id = ?";
+        String sql = "SELECT * FROM user WHERE id = ?";
 
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, id); // Set the parameter for the placeholder
+            ps.setInt(1, id);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -60,12 +59,12 @@ public class UserDAO {
 
     public User selectUserByUsername(String username) {
         User user = null;
-        String sql = "SELECT * FROM users WHERE username = ?";
+        String sql = "SELECT * FROM user WHERE username = ?";
     
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql)) {
     
-            ps.setString(1, username); // Set the parameter for the placeholder
+            ps.setString(1, username); 
     
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -83,7 +82,7 @@ public class UserDAO {
     }
 
     public User insertNewUser(User user) {
-        String sql = "INSERT INTO users (username, password) VALUES (?,?)";
+        String sql = "INSERT INTO user (username, password) VALUES (?,?)";
 
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -96,7 +95,7 @@ public class UserDAO {
 
             if (rs.next()) {
                 int generatedUserId = rs.getInt(1);
-                user.setId(generatedUserId); // Set the generated id in the user object
+                user.setId(generatedUserId); 
                 return user;
             }
 
@@ -107,14 +106,13 @@ public class UserDAO {
     }
 
     public void deleteUserById(int id) {
-        String sql = "DELETE FROM users WHERE id = ?";
+        String sql = "DELETE FROM user WHERE id = ?";
 
         try (Connection connection = DatabaseConnector.connect();
             PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             ps.executeUpdate();
-            // System.out.println("User Deleted");
 
         } catch (SQLException e) {
             System.err.println("Error deleting user: " + e.getMessage());

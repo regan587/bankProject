@@ -56,8 +56,14 @@ public class UserController {
         try {
             System.out.println("Enter your username");
             String username = scanner.nextLine();
+            if (username.length() > 30){
+                throw new CreateUserException("Username must not be longer than 30 characters");
+            }
             System.out.println("Enter your password");
             String password = scanner.nextLine();
+            if (password.length() > 30){
+                throw new CreateUserException("Password must not be longer than 30 characters");
+            }
             System.out.println("");
             User user = new User(username, password);
             User persistedUser = userService.createNewUser(user);

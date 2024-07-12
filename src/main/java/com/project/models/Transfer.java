@@ -1,8 +1,10 @@
 package com.project.models;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Timestamp;
 
-public class Transaction {
+public class Transfer {
     private int id;
     private Timestamp date;
     private double chargeAmount;
@@ -11,8 +13,7 @@ public class Transaction {
     private int accountId;
     private int userId;
 
-    // Constructor, getters, and setters
-    public Transaction(int id, Timestamp date, double chargeAmount, double remainingBalance, double previousBalance, int accountId, int userId) {
+    public Transfer(int id, Timestamp date, double chargeAmount, double remainingBalance, double previousBalance, int accountId, int userId) {
         this.id = id;
         this.date = date;
         this.chargeAmount = chargeAmount;
@@ -22,33 +23,13 @@ public class Transaction {
         this.userId = userId;
     }
 
-    // public Transaction(String , double chargeAmount, double remainingBalance, double previousBalance, int accountId, int userId, Timestamp date) {
-    //     this. = ;
-    //     this.chargeAmount = chargeAmount;
-    //     this.remainingBalance = remainingBalance;
-    //     this.previousBalance = previousBalance;
-    //     this.accountId = accountId;
-    //     this.userId = userId;
-    //     this.date = date; // Assigning timestamp parameter
-    // }
-
-    // public Transaction(String , double chargeAmount, double remainingBalance, double previousBalance, int accountId, int userId) {
-    //     this. = ;
-    //     this.chargeAmount = chargeAmount;
-    //     this.remainingBalance = remainingBalance;
-    //     this.previousBalance = previousBalance;
-    //     this.accountId = accountId;
-    //     this.userId = userId;
-    // }
-
-    public Transaction(double chargeAmount, int accountId, int userId, Timestamp date) {
+    public Transfer(double chargeAmount, int accountId, int userId, Timestamp date) {
         this.chargeAmount = chargeAmount;
         this.accountId = accountId;
         this.userId = userId;
         this.date = date;
     }
 
-    // Getters and setters
     public int getId() {
         return id;
     }
@@ -66,27 +47,27 @@ public class Transaction {
     }
 
     public double getChargeAmount() {
-        return chargeAmount;
+        return roundToTwoDecimalPlaces(chargeAmount);
     }
 
     public void setChargeAmount(double chargeAmount) {
-        this.chargeAmount = chargeAmount;
+        this.chargeAmount = roundToTwoDecimalPlaces(chargeAmount);
     }
 
-    public double getremainingBalance() {
-        return remainingBalance;
+    public double getRemainingBalance() {
+        return roundToTwoDecimalPlaces(remainingBalance);
     }
 
-    public void setremainingBalance(double remainingBalance) {
-        this.remainingBalance = remainingBalance;
+    public void setRemainingBalance(double remainingBalance) {
+        this.remainingBalance = roundToTwoDecimalPlaces(remainingBalance);
     }
 
-    public double getpreviousBalance() {
-        return previousBalance;
+    public double getPreviousBalance() {
+        return roundToTwoDecimalPlaces(previousBalance);
     }
 
-    public void setpreviousBalance(double previousBalance) {
-        this.previousBalance = previousBalance;
+    public void setPreviousBalance(double previousBalance) {
+        this.previousBalance = roundToTwoDecimalPlaces(previousBalance);
     }
 
     public int getAccountId() {
@@ -107,24 +88,35 @@ public class Transaction {
 
     @Override
     public String toString() {
-        return "Transaction{" +
+        return "Transfer{" +
                 "id=" + id +
                 ", date=" + date +
-                ", chargeAmount=" + chargeAmount +
-                ", remainingBalance=" + remainingBalance +
+                ", chargeAmount=" + String.format("%.2f", chargeAmount) +
+                ", remainingBalance=" + String.format("%.2f", remainingBalance) +
+                ", previousBalance=" + String.format("%.2f", previousBalance) +
                 ", accountId=" + accountId +
+                ", userId=" + userId +
                 '}';
     }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Transaction that = (Transaction) o;
+        Transfer that = (Transfer) o;
         return id == that.id &&
                 Double.compare(that.chargeAmount, chargeAmount) == 0 &&
                 Double.compare(that.remainingBalance, remainingBalance) == 0 &&
                 accountId == that.accountId &&
                 date.equals(that.date);
+    }
+
+    // public static double roundToTwoDecimalPlaces(double value) {
+    //     return Math.round(value * 100.0) / 100.0;
+    // }
+    public static double roundToTwoDecimalPlaces(double value) {
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

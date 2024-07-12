@@ -1,15 +1,16 @@
 package com.project;
 
 import com.project.controllers.CheckingAccountController;
-import com.project.controllers.TransactionController;
+import com.project.controllers.TransferController;
 import com.project.controllers.UserController;
+import com.project.exceptions.CreateUserException;
 import com.project.exceptions.InvalidInputException;
 
 public class Main { 
     public static void main(String[] args) {
         UserController userController = new UserController();
         CheckingAccountController checkingAccountController = new CheckingAccountController();
-        TransactionController transactionController = new TransactionController();
+        TransferController transferController = new TransferController();
         System.out.println("Welcome to Banking App! ");
         while (true) {
             try {
@@ -21,6 +22,7 @@ public class Main {
                 int userId = userResult[0];
                 if (userId > 0) {
                     boolean userWantsToQuit = false;
+                    System.out.println("Welcome to your account!");
                     while (true) {
                         try {
                             try {
@@ -38,8 +40,8 @@ public class Main {
                                     break; // Logout and return to the initial login screen
                                 }
 
-                                boolean transactionResult = transactionController.takeUserInput(accountId, String.valueOf(action));
-                                if (!transactionResult) {
+                                boolean transferResult = transferController.takeUserInput(accountId, String.valueOf(action));
+                                if (!transferResult) {
                                     userWantsToQuit = true; // User chose to quit
                                     break;
                                 }
@@ -54,7 +56,7 @@ public class Main {
                         break; // Quit the app
                     }
                 }
-            } catch (InvalidInputException e) {
+            } catch (InvalidInputException | CreateUserException e ) {
                 System.out.println(e.getMessage());
             }
         }

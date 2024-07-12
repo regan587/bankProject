@@ -6,7 +6,6 @@ import com.project.exceptions.CreateUserException;
 import com.project.exceptions.LoginException;
 import com.project.exceptions.NullUserIdException;
 import com.project.exceptions.NullUserUsernameException;
-
 import java.util.List;
 
 public class UserService {
@@ -81,6 +80,8 @@ public class UserService {
         }
         return user;
     }
+
+    // could remove deleteUser methods here and in DAO
 
     public void deleteUser(int id){
         User user = userDAO.selectUserById(id);
