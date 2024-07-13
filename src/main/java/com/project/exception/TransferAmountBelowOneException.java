@@ -1,4 +1,4 @@
-package com.project.exceptions;
+package com.project.exception;
 
 public class TransferAmountBelowOneException extends RuntimeException {
     public TransferAmountBelowOneException(String message){

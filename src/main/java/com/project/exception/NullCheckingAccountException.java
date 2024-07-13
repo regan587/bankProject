@@ -1,4 +1,4 @@
-package com.project.exceptions;
+package com.project.exception;
 
 public class NullCheckingAccountException extends RuntimeException {
     public NullCheckingAccountException(String message){

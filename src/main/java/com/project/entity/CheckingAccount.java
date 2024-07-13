@@ -1,4 +1,4 @@
-package com.project.models;
+package com.project.entity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

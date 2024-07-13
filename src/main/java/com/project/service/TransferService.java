@@ -1,10 +1,12 @@
-package com.project.services;
+package com.project.service;
 
 import java.util.List;
-import com.project.daos.TransferDAO;
-import com.project.exceptions.CheckingAccountBelowZeroException;
-import com.project.exceptions.TransferAmountBelowOneException;
-import com.project.models.Transfer;
+
+import com.project.dao.TransferDAO;
+import com.project.entity.Transfer;
+import com.project.exception.CheckingAccountBelowZeroException;
+import com.project.exception.TransferAmountBelowOneException;
+
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

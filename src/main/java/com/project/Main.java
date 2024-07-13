@@ -1,10 +1,10 @@
 package com.project;
 
-import com.project.controllers.CheckingAccountController;
-import com.project.controllers.TransferController;
-import com.project.controllers.UserController;
-import com.project.exceptions.CreateUserException;
-import com.project.exceptions.InvalidInputException;
+import com.project.controller.CheckingAccountController;
+import com.project.controller.TransferController;
+import com.project.controller.UserController;
+import com.project.exception.CreateUserException;
+import com.project.exception.InvalidInputException;
 
 public class Main { 
     public static void main(String[] args) {

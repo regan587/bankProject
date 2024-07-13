@@ -1,4 +1,4 @@
-package com.project.exceptions;
+package com.project.exception;
 
 public class LoginException extends RuntimeException{
     public LoginException(String message){

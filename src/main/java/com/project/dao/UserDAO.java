@@ -1,6 +1,6 @@
-package com.project.daos;
+package com.project.dao;
 
-import com.project.models.User;
+import com.project.entity.User;
 import com.project.util.DatabaseConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

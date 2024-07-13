@@ -1,4 +1,6 @@
-package com.project.models;
+package com.project.entity;
+
+import java.util.Objects;
 
 public class User {
 
@@ -50,6 +52,10 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public static int hashCode(String password) {
+        return Objects.hash(password);
     }
 
     @Override

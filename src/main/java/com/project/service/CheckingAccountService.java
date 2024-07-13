@@ -1,12 +1,12 @@
-package com.project.services;
+package com.project.service;
 
 import java.util.List;
 
-import com.project.daos.CheckingAccountDAO;
-import com.project.exceptions.CheckingAccountBelowZeroException;
-import com.project.exceptions.NoCheckingAccountsException;
-import com.project.exceptions.NullCheckingAccountException;
-import com.project.models.CheckingAccount;
+import com.project.dao.CheckingAccountDAO;
+import com.project.entity.CheckingAccount;
+import com.project.exception.CheckingAccountBelowZeroException;
+import com.project.exception.NoCheckingAccountsException;
+import com.project.exception.NullCheckingAccountException;
 
 public class CheckingAccountService {
     

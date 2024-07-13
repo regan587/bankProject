@@ -1,12 +1,12 @@
-package com.project.controllers;
+package com.project.controller;
 
-import com.project.exceptions.CreateUserException;
-import com.project.exceptions.InvalidInputException;
-import com.project.exceptions.LoginException;
-import com.project.exceptions.NullUserIdException;
-import com.project.exceptions.NullUserUsernameException;
-import com.project.models.User;
-import com.project.services.UserService;
+import com.project.entity.User;
+import com.project.exception.CreateUserException;
+import com.project.exception.InvalidInputException;
+import com.project.exception.LoginException;
+import com.project.exception.NullUserIdException;
+import com.project.exception.NullUserUsernameException;
+import com.project.service.UserService;
 import java.util.Scanner;
 
 public class UserController {
@@ -94,7 +94,8 @@ public class UserController {
             String loginUsername = scanner.nextLine();
             System.out.println("Enter your password");
             String loginPassword = scanner.nextLine();
-            User loginUser = new User(loginUsername, loginPassword);
+            String hashedLoginPassword = Integer.toString(User.hashCode(loginPassword));
+            User loginUser = new User(loginUsername, hashedLoginPassword);
             userService.userLogin(loginUser);
             User getLoggedInUser = null;
             try {

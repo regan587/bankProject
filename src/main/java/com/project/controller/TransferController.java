@@ -1,10 +1,11 @@
-package com.project.controllers;
+package com.project.controller;
 
 
-import com.project.exceptions.CheckingAccountBelowZeroException;
-import com.project.exceptions.TransferAmountBelowOneException;
-import com.project.models.Transfer;
-import com.project.services.TransferService;
+import com.project.entity.Transfer;
+import com.project.exception.CheckingAccountBelowZeroException;
+import com.project.exception.TransferAmountBelowOneException;
+import com.project.service.TransferService;
+
 import java.sql.Timestamp;
 import java.util.InputMismatchException;
 import java.util.Scanner;

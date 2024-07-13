@@ -1,4 +1,4 @@
-package com.project.exceptions;
+package com.project.exception;
 
 public class NoCheckingAccountsException extends RuntimeException{
     public NoCheckingAccountsException(String message){

@@ -1,12 +1,13 @@
-package com.project.controllers;
+package com.project.controller;
 
 import java.util.List;
 import java.util.Scanner;
-import com.project.models.CheckingAccount;
-import com.project.services.CheckingAccountService;
-import com.project.exceptions.CheckingAccountBelowZeroException;
-import com.project.exceptions.InvalidInputException;
-import com.project.exceptions.NoCheckingAccountsException;
+
+import com.project.entity.CheckingAccount;
+import com.project.exception.CheckingAccountBelowZeroException;
+import com.project.exception.InvalidInputException;
+import com.project.exception.NoCheckingAccountsException;
+import com.project.service.CheckingAccountService;
 
 
 public class CheckingAccountController {

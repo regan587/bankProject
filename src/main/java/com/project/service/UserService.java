@@ -1,12 +1,13 @@
-package com.project.services;
+package com.project.service;
 
-import com.project.models.User;
-import com.project.daos.UserDAO;
-import com.project.exceptions.CreateUserException;
-import com.project.exceptions.LoginException;
-import com.project.exceptions.NullUserIdException;
-import com.project.exceptions.NullUserUsernameException;
+import com.project.dao.UserDAO;
+import com.project.entity.User;
+import com.project.exception.CreateUserException;
+import com.project.exception.LoginException;
+import com.project.exception.NullUserIdException;
+import com.project.exception.NullUserUsernameException;
 import java.util.List;
+
 
 public class UserService {
 
@@ -23,7 +24,8 @@ public class UserService {
     public User createNewUser(User newUser){
         if (checkUsernameIsUnique(newUser)){
             if (checkPasswordLength(newUser) && checkUsernameLength(newUser)){
-                return userDAO.insertNewUser(newUser);
+                User hashedUser = new User(newUser.getUsername(),Integer.toString(User.hashCode(newUser.getPassword())));
+                return userDAO.insertNewUser(hashedUser);
             } else if (!checkPasswordLength(newUser) && !checkUsernameLength(newUser)){
                 throw new CreateUserException("Username and Password must be less than 30 characters");
             }
@@ -91,5 +93,6 @@ public class UserService {
         userDAO.deleteUserById(id);
         System.out.println("User with id " + id + " deleted!");
     }
+
 
 }

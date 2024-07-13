@@ -1,4 +1,4 @@
-package com.project.exceptions;
+package com.project.exception;
 
 public class NullUserUsernameException extends RuntimeException {
     public NullUserUsernameException(String message){
