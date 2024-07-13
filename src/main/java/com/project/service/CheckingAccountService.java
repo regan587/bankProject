@@ -31,6 +31,16 @@ public class CheckingAccountService {
         }
     }
 
+    public boolean checkIfACheckingAccountNameIsUnique(int userId, String username){
+        List<CheckingAccount> checkingAccounts = checkingAccountDAO.selectCheckingAccountsByUserId(userId);
+        for (CheckingAccount checkingAccount: checkingAccounts){
+            if (checkingAccount.getAccountName().equals(username)){
+                return false;
+            }
+        }
+        return true;
+    }
+
     public List<CheckingAccount> viewCheckingAccounts(int userId) {
         List<CheckingAccount> checkingAccounts = checkingAccountDAO.selectCheckingAccountsByUserId(userId);
         if (checkingAccounts == null || checkingAccounts.isEmpty()) {

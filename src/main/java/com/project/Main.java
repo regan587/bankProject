@@ -4,6 +4,7 @@ import com.project.controller.CheckingAccountController;
 import com.project.controller.TransferController;
 import com.project.controller.UserController;
 import com.project.exception.CreateUserException;
+import com.project.exception.DuplicateCheckingAccountNameException;
 import com.project.exception.InvalidInputException;
 
 public class Main { 
@@ -45,7 +46,7 @@ public class Main {
                                     userWantsToQuit = true; // User chose to quit
                                     break;
                                 }
-                            } catch (InvalidInputException e ){
+                            } catch (InvalidInputException | DuplicateCheckingAccountNameException e ){
                                 System.out.println(e.getMessage());
                             }
                         } catch (InvalidInputException e) {

@@ -2,11 +2,11 @@ package com.project.controller;
 
 import java.util.List;
 import java.util.Scanner;
-
 import com.project.entity.CheckingAccount;
 import com.project.exception.CheckingAccountBelowZeroException;
 import com.project.exception.InvalidInputException;
 import com.project.exception.NoCheckingAccountsException;
+import com.project.exception.DuplicateCheckingAccountNameException;
 import com.project.service.CheckingAccountService;
 
 
@@ -71,6 +71,9 @@ public class CheckingAccountController {
             try {
                 System.out.println("Enter a name for your new account: ");
                 String newAccountName = scanner.nextLine();
+                if (!checkingAccountService.checkIfACheckingAccountNameIsUnique(userId, newAccountName)){
+                    throw new DuplicateCheckingAccountNameException("A checking account with that name already exists!");
+                }
                 System.out.println("Enter an amount to initially deposit into your new account: ");
                 double newAccountAmount = Double.parseDouble(scanner.nextLine());
                 CheckingAccount checkingAccount = new CheckingAccount(newAccountName, newAccountAmount , userId);
