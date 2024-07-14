@@ -162,4 +162,21 @@ public class TransferDAO {
             System.out.println(e.getMessage());
         }
     }
+
+    public void deleteTransfersBySavingAccountId(int accountId){
+        try (Connection connection = DatabaseConnector.connect()){
+            String sql = "DELETE FROM transfer WHERE account_id = ?";
+            
+            PreparedStatement ps = connection.prepareStatement(sql);
+            
+            ps.setInt(1,accountId);
+            int rowsAffected = ps.executeUpdate();
+            System.out.println("Deleted " + rowsAffected + " transfers.");
+            System.out.println("");
+            // ps.executeUpdate();
+            
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }

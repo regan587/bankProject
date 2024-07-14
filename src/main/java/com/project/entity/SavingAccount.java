@@ -3,23 +3,26 @@ package com.project.entity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class CheckingAccount {
+public class SavingAccount {
 
     private int id;
     private String accountName;
     private double balance;
+    private double interestRate;
     private int userId;
 
-    public CheckingAccount(int id, String accountName, double balance, int userId) {
+    public SavingAccount(int id, String accountName, double balance, double interestRate, int userId) {
         this.id = id;
         this.accountName = accountName;
         this.balance = balance;
+        this.interestRate = interestRate;
         this.userId = userId;
     }
 
-    public CheckingAccount(String accountName, double balance, int userId) {
+    public SavingAccount(String accountName, double balance, double interestRate, int userId) {
         this.accountName = accountName;
         this.balance = balance;
+        this.interestRate = interestRate;
         this.userId = userId;
     }
 
@@ -47,6 +50,14 @@ public class CheckingAccount {
         this.balance = roundToTwoDecimalPlaces(balance);
     }
 
+    public double getInterestRate() {
+        return roundToTwoDecimalPlaces(interestRate);
+    }
+
+    public void setInterestRate(double balance) {
+        this.balance = roundToTwoDecimalPlaces(interestRate);
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -57,7 +68,7 @@ public class CheckingAccount {
 
     @Override
     public String toString() {
-        return "CheckingAccount{" +
+        return "SavingAccount{" +
                 "id=" + id +
                 ", accountName='" + accountName + '\'' +
                 ", balance=" + String.format("%.2f", balance) +
@@ -69,7 +80,7 @@ public class CheckingAccount {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CheckingAccount that = (CheckingAccount) o;
+        SavingAccount that = (SavingAccount) o;
         return id == that.id &&
                 Double.compare(that.balance, balance) == 0 &&
                 userId == that.userId &&
@@ -81,5 +92,5 @@ public class CheckingAccount {
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
+    
 }
-
