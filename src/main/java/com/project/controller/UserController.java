@@ -33,6 +33,7 @@ public class UserController {
                     (Enter 'q' to exit at anytime);
                     """);
                     String userInput = scanner.nextLine();  
+                    System.out.println("");
                     switch (userInput) {
                         case "1":
                             return createAccountHelper();
@@ -75,7 +76,6 @@ public class UserController {
                 System.out.println(e.getMessage());
             }
             
-            System.out.println("Welcome " + newUser.getUsername() + "! Your profile has been created!");
             userIdAndBoolean[0] = newUser.getId();
             userIdAndBoolean[1] = 1;
             return userIdAndBoolean;

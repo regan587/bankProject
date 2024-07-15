@@ -29,6 +29,7 @@ public class AccountService {
             System.out.println("");
             System.out.printf(newAccount.getAccountName() + " Created with an initial deposit of: $%.2f!", newAccount.getBalance());
             System.out.println("");
+            System.out.println("");
             return accountDAO.insertNewAccount(newAccount);
         }
     }
@@ -46,7 +47,7 @@ public class AccountService {
     public List<Account> viewAccounts(int userId) {
         List<Account> accounts = accountDAO.selectAccountsByUserId(userId);
         if (accounts == null || accounts.isEmpty()) {
-            throw new NoCheckingAccountsException("No accounts associated with this account!");
+            throw new NoCheckingAccountsException("You have not created an account yet!");
         }
         return accounts;
     }
@@ -56,12 +57,16 @@ public class AccountService {
         List<Account> savingAccounts = accountDAO.selectSavingAccountsByUserId(userId);
         List<Account> allAccounts = accountDAO.selectAccountsByUserId(userId);
         if (allAccounts == null || allAccounts.isEmpty()) {
-            throw new NoAccountsException("No accounts associated with this account!");
+            throw new NoAccountsException("You have not created an account yet!");
         }
-        printHelper(checkingAccounts, 1,"Checking Accounts:");
-        System.out.println("");
-        printHelper(savingAccounts, checkingAccounts.size()+1, "Saving Accounts:");
-        System.out.println("");
+        if (!checkingAccounts.isEmpty()){
+            printHelper(checkingAccounts, 1,"Checking Accounts:");
+            System.out.println("");
+        }
+        if (!savingAccounts.isEmpty()){
+            printHelper(savingAccounts, checkingAccounts.size()+1, "Saving Accounts:");
+            System.out.println("");
+        }
     }
 
     private void printHelper(List<Account> accountList,int multiplier, String header){
@@ -79,6 +84,9 @@ public class AccountService {
         List<List<Account>> totalList = new ArrayList<>();
         totalList.add(accountDAO.selectCheckingAccountsByUserId(userId));
         totalList.add(accountDAO.selectSavingAccountsByUserId(userId));
+        if (totalList.isEmpty()){
+            throw new NoAccountsException("You have not created an account yet!");
+        }
         List<Account> sortedList = new ArrayList<>();
         for (List<Account> accountList: totalList){
             for (Account account: accountList) {
@@ -111,15 +119,16 @@ public class AccountService {
     public void deleteAccount(int id) {
         Account account = accountDAO.selectAccountById(id);
         if (account == null) {
-            throw new NoCheckingAccountsException("Account does not exist!");
+            throw new NoAccountsException("Account does not exist!");
         }
+        System.out.println("");
         System.out.println("Account: " + account.getAccountName() + " deleted!");
         accountDAO.deleteAccountByAccountId(id);
     }
     public void deleteAccountsByUserId(int userId){
         List<Account> accounts = accountDAO.selectAccountsByUserId(userId);
         if (accounts.isEmpty()){
-            throw new NoCheckingAccountsException("There are no Accounts to delete!");
+            throw new NoAccountsException("There are no Accounts to delete!");
         }
         accountDAO.deleteCheckingAccountsByUserId(userId);
         System.out.println("All accounts deleted");

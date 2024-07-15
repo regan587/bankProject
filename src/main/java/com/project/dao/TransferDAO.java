@@ -140,7 +140,7 @@ public class TransferDAO {
             
             ps.setInt(1,accountId);
             int rowsAffected = ps.executeUpdate();
-            System.out.println("Deleted " + rowsAffected + " transfers.");
+            System.out.println("Deleted " + rowsAffected + " transfer(s).");
             System.out.println("");
             // ps.executeUpdate();
             

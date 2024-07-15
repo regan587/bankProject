@@ -70,6 +70,7 @@ public class TransferService {
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     
         // Print the header
+        System.out.println("");
         System.out.printf("%-20s | %-27s | %s%n", "Charge Amount", "Total Amount Remaining", "Date");
     
         // Print the transfers
@@ -83,6 +84,7 @@ public class TransferService {
                             String.format("$%.2f", transfer.getRemainingBalance()), 
                             formattedDate);
         }
+        System.out.println("");
     }
     
 }

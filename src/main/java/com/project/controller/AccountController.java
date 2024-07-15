@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.project.entity.Account;
 import com.project.exception.CheckingAccountBelowZeroException;
 import com.project.exception.InvalidInputException;
+import com.project.exception.NoAccountsException;
 import com.project.exception.NoCheckingAccountsException;
 import com.project.exception.DuplicateCheckingAccountNameException;
 import com.project.service.AccountService;
@@ -43,6 +44,7 @@ public class AccountController {
                     """);
             
             String userInput = scanner.nextLine();  
+            System.out.println("");
             switch (userInput) {
                 case "1":
                     accountCreationInput(userId);
@@ -78,6 +80,7 @@ public class AccountController {
                 2 Saving Account
                 """);
         String userInput = scanner.nextLine();
+        System.out.println("");
         switch (userInput) {
             case "1":
                 accountCreationHelper(userId, false);
@@ -120,13 +123,19 @@ public class AccountController {
         try{
             try {
                 checkingAccounts = accountService.sortedAccountList(userId);
-            } catch (NoCheckingAccountsException e) {
+            } catch (NoAccountsException e) {
                 System.out.println(e.getMessage());
                 return;  
             }
         
             System.out.println("Which account do you want to delete?");
-            accountService.formatAccountListForSelection(userId);
+            System.out.println("");
+            try {
+                accountService.formatAccountListForSelection(userId);
+            } catch (NoAccountsException e){
+                System.out.println(e.getMessage());
+                return;
+            }
 
             String checkingAccountChoice = scanner.nextLine();
         
@@ -137,11 +146,12 @@ public class AccountController {
                 System.out.println("");
                 System.out.println("Selected Account: " + selectedAccount.getAccountName() + " | Total Balance: $" + selectedAccount.getBalance());
                 System.out.println("Are you sure you want to delete this account? (yes/no): ");
+                System.out.println("");
                 String confirmation = scanner.nextLine();
                 if (confirmation.equalsIgnoreCase("yes")) {
                     try {
                         accountService.deleteAccount(selectedAccount.getId());
-                    } catch (NoCheckingAccountsException e){
+                    } catch (NoAccountsException e){
                         System.out.println(e.getMessage());
                     }
                 } else {
@@ -158,14 +168,14 @@ public class AccountController {
         try {
             try {
                 accountService.formatAccountListForSelection(userId);
-            } catch (NoCheckingAccountsException e){
+            } catch (NoAccountsException e){
                 System.out.println(e.getMessage());
                 return new int[] {-1};
             }
             List<Account> checkingAccounts = null;
             try {
                 checkingAccounts = accountService.sortedAccountList(userId);
-            } catch (NoCheckingAccountsException e) {
+            } catch (NoAccountsException e) {
                 System.out.println(e.getMessage());
                 return new int[] {-1}; 
             }
@@ -176,7 +186,9 @@ public class AccountController {
             }
         
             System.out.println("Choose an account to view transfers!");
+            System.out.println("");
             String checkingAccountChoice = scanner.nextLine();
+            System.out.println("");
         
 
             int accountIndex = Integer.parseInt(checkingAccountChoice) - 1;
@@ -199,17 +211,23 @@ public class AccountController {
         List<Account> checkingAccounts = null;
         try {
             checkingAccounts = accountService.sortedAccountList(userId);
-        } catch (NoCheckingAccountsException e) {
+        } catch (NoAccountsException e) {
             System.out.println(e.getMessage());
             return new int[]{-1};
         }
+    
+        try {
+            accountService.formatAccountListForSelection(userId);
+        } catch (NoAccountsException e){
+            System.out.println(e.getMessage());
+            return new int[]{-1};
+        }
+
         if (direction.equals("Deposit")) {
             System.out.println("Which account do you want to deposit into?");
         } else if (direction.equals("Withdrawal")) {
             System.out.println("Which account do you want to withdraw from?");
         }
-
-        accountService.formatAccountListForSelection(userId);
         String checkingAccountChoice = scanner.nextLine();
         try {
             int accountIndex = Integer.parseInt(checkingAccountChoice) - 1;
