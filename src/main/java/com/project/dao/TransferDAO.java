@@ -12,8 +12,8 @@ import java.util.List;
 public class TransferDAO {
 
     public Transfer insertNewTransfer(Transfer transfer, String direction){
-        String selectSql = "SELECT balance FROM checking_account WHERE id = ?";
-        String updateSql = "UPDATE checking_account SET balance = ? WHERE id = ?";
+        String selectSql = "SELECT balance FROM account WHERE id = ?";
+        String updateSql = "UPDATE account SET balance = ? WHERE id = ?";
         String insertSql = "INSERT INTO transfer (charge_amount, remaining_balance, previous_balance, account_id, user_id, date) VALUES (?,?,?,?,?,?)";
 
         try (Connection conn = DatabaseConnector.connect()) {
@@ -132,7 +132,7 @@ public class TransferDAO {
         return transfers;
     }
 
-    public void deleteTransfersByCheckingAccountId(int accountId){
+    public void deleteTransfersByAccountId(int accountId){
         try (Connection connection = DatabaseConnector.connect()){
             String sql = "DELETE FROM transfer WHERE account_id = ?";
             
@@ -163,20 +163,4 @@ public class TransferDAO {
         }
     }
 
-    public void deleteTransfersBySavingAccountId(int accountId){
-        try (Connection connection = DatabaseConnector.connect()){
-            String sql = "DELETE FROM transfer WHERE account_id = ?";
-            
-            PreparedStatement ps = connection.prepareStatement(sql);
-            
-            ps.setInt(1,accountId);
-            int rowsAffected = ps.executeUpdate();
-            System.out.println("Deleted " + rowsAffected + " transfers.");
-            System.out.println("");
-            // ps.executeUpdate();
-            
-        }catch(SQLException e){
-            System.out.println(e.getMessage());
-        }
-    }
 }

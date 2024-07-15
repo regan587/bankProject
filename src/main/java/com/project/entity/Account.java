@@ -3,7 +3,7 @@ package com.project.entity;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class SavingAccount {
+public class Account {
 
     private int id;
     private String accountName;
@@ -11,20 +11,29 @@ public class SavingAccount {
     private double interestRate;
     private int userId;
 
-    public SavingAccount(int id, String accountName, double balance, double interestRate, int userId) {
+    // full constructor
+    public Account(int id, String accountName, double balance, double interestRate, int userId) {
         this.id = id;
         this.accountName = accountName;
         this.balance = balance;
         this.interestRate = interestRate;
         this.userId = userId;
     }
-
-    public SavingAccount(String accountName, double balance, double interestRate, int userId) {
+    // saving account
+    public Account(String accountName, double balance, double interestRate, int userId){
         this.accountName = accountName;
         this.balance = balance;
         this.interestRate = interestRate;
         this.userId = userId;
     }
+
+    // checking account
+    public Account(String accountName, double balance, int userId) {
+        this.accountName = accountName;
+        this.balance = balance;
+        this.userId = userId;
+    }
+
 
     public int getId() {
         return id;
@@ -50,12 +59,12 @@ public class SavingAccount {
         this.balance = roundToTwoDecimalPlaces(balance);
     }
 
-    public double getInterestRate() {
+    public double getInterestRate(){
         return roundToTwoDecimalPlaces(interestRate);
     }
 
-    public void setInterestRate(double balance) {
-        this.balance = roundToTwoDecimalPlaces(interestRate);
+    public void setInterestRate(double interestRate){
+        this.interestRate = interestRate;
     }
 
     public int getUserId() {
@@ -68,10 +77,11 @@ public class SavingAccount {
 
     @Override
     public String toString() {
-        return "SavingAccount{" +
+        return "Account{" +
                 "id=" + id +
                 ", accountName='" + accountName + '\'' +
-                ", balance=" + String.format("%.2f", balance) +
+                ", balance=" + balance +
+                ", interestRate=" + (interestRate == 0 ? "null" : interestRate) +
                 ", userId=" + userId +
                 '}';
     }
@@ -80,7 +90,7 @@ public class SavingAccount {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        SavingAccount that = (SavingAccount) o;
+        Account that = (Account) o;
         return id == that.id &&
                 Double.compare(that.balance, balance) == 0 &&
                 userId == that.userId &&
@@ -92,5 +102,5 @@ public class SavingAccount {
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-    
 }
+

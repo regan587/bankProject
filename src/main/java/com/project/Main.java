@@ -1,6 +1,6 @@
 package com.project;
 
-import com.project.controller.CheckingAccountController;
+import com.project.controller.AccountController;
 import com.project.controller.TransferController;
 import com.project.controller.UserController;
 import com.project.exception.CreateUserException;
@@ -9,8 +9,10 @@ import com.project.exception.InvalidInputException;
 
 public class Main { 
     public static void main(String[] args) {
+
+
         UserController userController = new UserController();
-        CheckingAccountController checkingAccountController = new CheckingAccountController();
+        AccountController checkingAccountController = new AccountController();
         TransferController transferController = new TransferController();
         System.out.println("Welcome to Banking App! ");
         while (true) {
@@ -46,6 +48,7 @@ public class Main {
                                     userWantsToQuit = true; // User chose to quit
                                     break;
                                 }
+
                             } catch (InvalidInputException | DuplicateCheckingAccountNameException e ){
                                 System.out.println(e.getMessage());
                             }

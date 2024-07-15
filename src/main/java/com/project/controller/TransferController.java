@@ -29,7 +29,6 @@ public class TransferController {
         while (true){
             switch (action) {
                 case "3":
-            
                     transferService.printTransfers(accountId);
                     return true;
 
