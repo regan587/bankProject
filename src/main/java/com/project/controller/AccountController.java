@@ -6,7 +6,6 @@ import com.project.entity.Account;
 import com.project.exception.CheckingAccountBelowZeroException;
 import com.project.exception.InvalidInputException;
 import com.project.exception.NoAccountsException;
-import com.project.exception.NoCheckingAccountsException;
 import com.project.exception.DuplicateCheckingAccountNameException;
 import com.project.service.AccountService;
 
@@ -36,7 +35,7 @@ public class AccountController {
                     Please enter the number associated with the action you want to perform:
                     1 Create New Account
                     2 Delete Account
-                    3 View Accounts
+                    3 View Account Details
                     4 Make a Deposit
                     5 Make a Withdrawal
                     6 Logout
@@ -128,10 +127,10 @@ public class AccountController {
                 return;  
             }
         
-            System.out.println("Which account do you want to delete?");
-            System.out.println("");
             try {
                 accountService.formatAccountListForSelection(userId);
+                System.out.println("Enter the matching number of the account you want to delete");
+                System.out.println("");
             } catch (NoAccountsException e){
                 System.out.println(e.getMessage());
                 return;
@@ -175,18 +174,20 @@ public class AccountController {
             List<Account> checkingAccounts = null;
             try {
                 checkingAccounts = accountService.sortedAccountList(userId);
+                System.out.println("Choose an account to view details!");
+                System.out.println("");
             } catch (NoAccountsException e) {
                 System.out.println(e.getMessage());
                 return new int[] {-1}; 
             }
         
-            if (checkingAccounts == null || checkingAccounts.isEmpty()) {
-                System.out.println("No checking accounts found for the user!");
-                return new int[] {-1}; 
-            }
+            // if (checkingAccounts == null || checkingAccounts.isEmpty()) {
+            //     System.out.println("No checking accounts found for the user!");
+            //     return new int[] {-1}; 
+            // }
         
-            System.out.println("Choose an account to view transfers!");
-            System.out.println("");
+            // System.out.println("Choose an account to view transfers!");
+            // System.out.println("");
             String checkingAccountChoice = scanner.nextLine();
             System.out.println("");
         
@@ -194,8 +195,15 @@ public class AccountController {
             int accountIndex = Integer.parseInt(checkingAccountChoice) - 1;
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 Account selectedAccount = checkingAccounts.get(accountIndex);
-                System.out.printf("Selected Account: " + selectedAccount.getAccountName() + 
+                if (selectedAccount.getInterestRate() > 0){
+                    System.out.printf("Selected Account: " + selectedAccount.getAccountName() + 
+                "  |  Total Balance: $%.2f  |  Interest Rate: %.2f", selectedAccount.getBalance(),selectedAccount.getInterestRate());
+                } else {
+                    System.out.printf("Selected Account: " + selectedAccount.getAccountName() + 
                 "  |  Total Balance: $%.2f", selectedAccount.getBalance());
+                }
+                // System.out.printf("Selected Account: " + selectedAccount.getAccountName() + 
+                // "  |  Total Balance: $%.2f", selectedAccount.getBalance());
                 System.out.println("");
                 int[] accountIdAndChoiceInt = {selectedAccount.getId(), 3};
                 return accountIdAndChoiceInt;
@@ -228,11 +236,13 @@ public class AccountController {
         } else if (direction.equals("Withdrawal")) {
             System.out.println("Which account do you want to withdraw from?");
         }
+        System.out.println("");
         String checkingAccountChoice = scanner.nextLine();
         try {
             int accountIndex = Integer.parseInt(checkingAccountChoice) - 1;
             if (accountIndex >= 0 && accountIndex < checkingAccounts.size()) {
                 Account selectedAccount = checkingAccounts.get(accountIndex);
+                System.out.println("");
                 System.out.printf("Selected Account: " + selectedAccount.getAccountName() + 
                 "  |  Total Balance: $%.2f", selectedAccount.getBalance());
                 System.out.println("");

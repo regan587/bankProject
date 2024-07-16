@@ -49,11 +49,14 @@ public class TransferController {
         
         try {
             System.out.println("Enter an amount to Deposit into your account");
+            System.out.println("");
             double depositAmount = Transfer.roundToTwoDecimalPlaces(scanner.nextDouble());
+            System.out.println("");
             int depositUserId = transferService.selectTransfersByAccountId(accountId).get(0).getUserId();
             Transfer deposittransfer = new Transfer(depositAmount, accountId, depositUserId, new Timestamp(System.currentTimeMillis()));
             Transfer persistedtransfer = transferService.createNewDeposit(deposittransfer); 
             System.out.printf("$%.2f Has been Deposited into your account! Your new balance is: $%.2f%n", depositAmount, persistedtransfer.getRemainingBalance());
+            System.out.println("");
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number.");
             scanner.next(); // Clear the invalid input
@@ -66,12 +69,14 @@ public class TransferController {
     private void withdrawalTransferHelper(int accountId) {
         try {
             System.out.println("Enter an amount to withdraw from your account");
+            System.out.println("");
             double withdrawAmount = Transfer.roundToTwoDecimalPlaces(scanner.nextDouble());
+            System.out.println("");
             int withdrawUserId = transferService.selectTransfersByAccountId(accountId).get(0).getUserId();
             Transfer withdrawtransfer = new Transfer(withdrawAmount, accountId, withdrawUserId, new Timestamp(System.currentTimeMillis()));
             Transfer persistedtransfer = transferService.createNewWithdrawal(withdrawtransfer);
-            System.out.println("");
             System.out.printf("$%.2f Has been withdrawn from your account! Your new balance is: $%.2f%n", withdrawAmount, persistedtransfer.getRemainingBalance());
+            System.out.println("");
         } catch (InputMismatchException e) {
             System.out.println("Invalid input. Please enter a valid number.");
             scanner.next(); // Clear the invalid input

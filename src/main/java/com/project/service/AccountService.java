@@ -57,7 +57,7 @@ public class AccountService {
         List<Account> savingAccounts = accountDAO.selectSavingAccountsByUserId(userId);
         List<Account> allAccounts = accountDAO.selectAccountsByUserId(userId);
         if (allAccounts == null || allAccounts.isEmpty()) {
-            throw new NoAccountsException("You have not created an account yet!");
+            throw new NoAccountsException("You have not created an account yet!" + "\n");
         }
         if (!checkingAccounts.isEmpty()){
             printHelper(checkingAccounts, 1,"Checking Accounts:");

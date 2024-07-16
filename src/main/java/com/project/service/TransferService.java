@@ -26,7 +26,7 @@ public class TransferService {
     public Transfer createNewDeposit(Transfer transfer){
         Double chargeAmount = Transfer.roundToTwoDecimalPlaces(transfer.getChargeAmount());
         if (chargeAmount < 1){
-            throw new TransferAmountBelowOneException("Deposit amount must be greater than 1 dollar!");
+            throw new TransferAmountBelowOneException("Deposit amount must be greater than 1 dollar!" + "\n");
         }
         // return transferDAO.insertNewDepositTransfer(transfer);
         return transferDAO.insertNewTransfer(transfer, "deposit");
@@ -38,13 +38,13 @@ public class TransferService {
         List<Transfer> transfers = transferDAO.selectTransfersByAccountId(accountId);
         double currentbalance = transfers.get(transfers.size()-1).getRemainingBalance();
         if (chargeAmount < 1) {
-            throw new TransferAmountBelowOneException("Withdrawal amount must be greater than 1 dollar!");
+            throw new TransferAmountBelowOneException("Withdrawal amount must be greater than 1 dollar!" + "\n");
         }
     
         double newremainingBalance = currentbalance - chargeAmount;
     
         if (newremainingBalance < 0) {
-            throw new CheckingAccountBelowZeroException("Checking account balances cannot go below 0!");
+            throw new CheckingAccountBelowZeroException("Account balances cannot go below 0!" + "\n");
         }
     
         transfer.setRemainingBalance(newremainingBalance); // Update the transfer object with new total amount remaining

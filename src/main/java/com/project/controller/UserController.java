@@ -28,8 +28,8 @@ public class UserController {
         while(true){
             System.out.println("""
                     Please enter the number associated with the action you want to perform:
-                    1 Create Account
-                    2 Log in to your account
+                    1 Create User Profile
+                    2 Log In to Your Profile
                     (Enter 'q' to exit at anytime);
                     """);
                     String userInput = scanner.nextLine();  
@@ -58,12 +58,14 @@ public class UserController {
             System.out.println("Enter your username");
             String username = scanner.nextLine();
             if (username.length() > 30){
-                throw new CreateUserException("Username must not be longer than 30 characters");
+                System.out.println("");
+                throw new CreateUserException("Username must not be longer than 30 characters" + "\n");
             }
             System.out.println("Enter your password");
             String password = scanner.nextLine();
             if (password.length() > 30){
-                throw new CreateUserException("Password must not be longer than 30 characters");
+                System.out.println("");
+                throw new CreateUserException("Password must not be longer than 30 characters" + "\n");
             }
             System.out.println("");
             User user = new User(username, password);

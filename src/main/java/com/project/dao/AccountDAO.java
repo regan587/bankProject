@@ -125,7 +125,7 @@ public class AccountDAO {
         double interestRate = account.getInterestRate(); // Per minute interest rate
         
         // Apply compound interest formula
-        double newBalance = currentBalance * Math.pow(1 + interestRate / 1000, timeDifferenceMinutes);
+        double newBalance = currentBalance * Math.pow(1 + interestRate/ 60, timeDifferenceMinutes);
         
         try (Connection conn = DatabaseConnector.connect();
             PreparedStatement ps = conn.prepareStatement(sql)) {

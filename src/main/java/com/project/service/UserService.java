@@ -30,11 +30,13 @@ public class UserService {
                 throw new CreateUserException("Username and Password must be less than 30 characters");
             }
             else if (!checkPasswordLength(newUser)){
-                throw new CreateUserException("Password must be less than 30 characters!");
+                System.out.println("");
+                throw new CreateUserException("Password must be less than 30 characters!" + "\n");
             } else if (!checkUsernameLength(newUser)){
-                throw new CreateUserException("Username must be less than 30 characters!");
+                System.out.println("");
+                throw new CreateUserException("Username must be less than 30 characters!" + "\n");
             }
-        } throw new CreateUserException("Username is taken!");
+        } throw new CreateUserException("Username is taken!" + "\n");
     }
 
     private boolean checkUsernameIsUnique(User newUser){
@@ -64,7 +66,8 @@ public class UserService {
                 return loginUser;
             }
         }
-        throw new LoginException("Invalid username/password combination!");
+        System.out.println("");
+        throw new LoginException("Invalid username/password combination!" + "\n");
     }
 
     public User selectUserById(int id){

@@ -51,9 +51,11 @@ public class Main {
 
                             } catch (InvalidInputException | DuplicateCheckingAccountNameException e ){
                                 System.out.println(e.getMessage());
+                                System.out.println("");
                             }
                         } catch (InvalidInputException e) {
                             System.out.println(e.getMessage());
+                            System.out.println("");
                         }
                     }
                     if (userWantsToQuit) {
@@ -62,6 +64,8 @@ public class Main {
                 }
             } catch (InvalidInputException | CreateUserException e ) {
                 System.out.println(e.getMessage());
+                System.out.println("");
+                
             }
         }
         System.out.println("Thank you for using the Banking App. Goodbye!");
